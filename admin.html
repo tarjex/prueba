@@ -6,9 +6,19 @@
 <title>Tarjex Panel</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f7fb;font-family:Arial,sans-serif;color:#111827}
+body{margin:0;background:#eef2f7;font-family:Arial,sans-serif;color:#111827}
+button:focus-visible,input:focus-visible,.wa-link:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
 .wrap{max-width:600px;margin:auto;padding:24px}
-.card{background:white;border:1px solid #e5e7eb;border-radius:22px;padding:22px;margin-top:18px}
+.card{background:#fff;border:1px solid #cbd5e1;border-radius:22px;padding:24px;margin-top:18px;box-shadow:0 8px 24px rgba(15,23,42,.08)}
+#result .card{border:2px solid #94a3b8;box-shadow:0 12px 28px rgba(15,23,42,.12);padding:24px}
+#result .row{align-items:center;padding:4px 0 18px;border-bottom:1px solid #e2e8f0;margin-bottom:16px}
+#result h2{font-size:25px;line-height:1.15;margin:0 0 7px;color:#0f172a;overflow-wrap:anywhere}
+#result small{display:inline-block;font-size:16px;font-weight:700;letter-spacing:.3px;color:#334155}
+#result .pill{background:#172033;color:#fff;padding:12px 16px;font-size:18px;border:2px solid #64748b;box-shadow:0 3px 9px #0f172a22}
+#result button{min-height:54px;font-size:17px;margin-top:12px;letter-spacing:.1px}
+#result button.secondary{background:#e2e8f0;color:#0f172a;border:1px solid #cbd5e1}
+#result .notice{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;font-weight:600}
+@media(max-width:480px){.wrap{padding:16px}.card,#result .card{padding:18px}#result h2{font-size:22px}#result .pill{font-size:16px;padding:10px 12px}}
 input,button,.wa-link{width:100%;padding:14px;border-radius:12px;font-size:16px}
 input{border:1px solid #d1d5db;margin:7px 0 12px}
 button{background:#111827;color:white;border:0;font-weight:700;cursor:pointer}
@@ -54,6 +64,16 @@ const API_URL="https://script.google.com/macros/s/AKfycbyWWDHC4rZtJmQr-B2On0buiH
 const GOAL=5;
 let pin="";
 
+// Enter ejecuta la acción principal desde los campos del panel.
+document.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("pin").addEventListener("keydown",e=>{
+    if(e.key==="Enter"){e.preventDefault();login();}
+  });
+  document.getElementById("phone").addEventListener("keydown",e=>{
+    if(e.key==="Enter"){e.preventDefault();search();}
+  });
+});
+
 async function api(action,data={}){
   const r=await fetch(API_URL,{method:"POST",body:JSON.stringify({action,...data})});
   return await r.json();
@@ -97,14 +117,14 @@ function whatsappUrl(customer,message){
 
 function buildStampMessage(c){
   if(c.stamps>=GOAL){
-    return `¡Hola ${c.name}! ☕¡Completaste tus ${GOAL} sellos de Café Club! Ya tenés tu café gratis. Mostrá tu tarjeta en el local para disfrutar tu recompensa. ¡Gracias por elegirnos!❤️ `;
+    return `¡Hola ${c.name}! \u2615\u{1F389} ¡Completaste tus ${GOAL} sellos de Café Club! Ya tenés tu café gratis. Mostrá tu tarjeta en el local para disfrutar tu recompensa. ¡Gracias por elegirnos! \u2764\uFE0F`;
   }
   const remaining=GOAL-c.stamps;
-  return `¡Hola ${c.name}! ☕¡Acabás de sumar un nuevo sello a tu Café Club! Ya tenés ${c.stamps} de ${GOAL} sellos. Te falta${remaining===1?"":"n"} ${remaining} para conseguir tu café gratis. ¡Te esperamos! 🥰`;
+  return `¡Hola ${c.name}! ☕\u2764\uFE0F ¡Acabás de sumar un nuevo sello a tu Café Club! Ya tenés ${c.stamps} de ${GOAL} sellos. Te falta${remaining===1?"":"n"} ${remaining} para conseguir tu café gratis. ¡Te esperamos! \u{1F381}`;
 }
 
 function buildRedeemMessage(c){
-  return `¡Hola ${c.name}! ☕ ¡Tu recompensa de Café Club fue canjeada! Gracias por visitarnos y ser parte de TARJEX. ¡Te esperamos pronto! 🥰 `;
+  return `¡Hola ${c.name}! \u{1F381}☕ ¡Tu recompensa de Café Club fue canjeada! Gracias por visitarnos y ser parte de TARJEX. ¡Te esperamos pronto! \u2764\uFE0F`;
 }
 
 function renderCustomer(c, notification){
