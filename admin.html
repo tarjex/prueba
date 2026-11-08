@@ -19,6 +19,12 @@ button{background:#111827;color:white;border:0;font-weight:700;cursor:pointer}
 .secondary{background:#eef2f7;color:#111827;margin-top:10px}
 .wa-link{display:block;text-align:center;text-decoration:none;background:#16a34a;color:white;font-weight:700;margin-top:12px}
 .small{font-size:13px;color:#6b7280;line-height:1.45}
+
+button,.wa-link{cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
+button:hover,.wa-link:hover{transform:translateY(-2px);box-shadow:0 8px 18px #11182722;filter:brightness(1.04)}
+button:active,.wa-link:active{transform:scale(.98)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
@@ -91,14 +97,14 @@ function whatsappUrl(customer,message){
 
 function buildStampMessage(c){
   if(c.stamps>=GOAL){
-    return `¡Hola ${c.name}! ☕🎉 ¡Completaste tus ${GOAL} sellos de Café Club! Ya tenés tu café gratis. Mostrá tu tarjeta en el local para disfrutar tu recompensa. ¡Gracias por elegirnos! ❤️`;
+    return `¡Hola ${c.name}! \u2615\u{1F389} ¡Completaste tus ${GOAL} sellos de Café Club! Ya tenés tu café gratis. Mostrá tu tarjeta en el local para disfrutar tu recompensa. ¡Gracias por elegirnos! \u2764\uFE0F`;
   }
   const remaining=GOAL-c.stamps;
-  return `¡Hola ${c.name}! ☕❤️ ¡Acabás de sumar un nuevo sello a tu Café Club! Ya tenés ${c.stamps} de ${GOAL} sellos. Te falta${remaining===1?"":"n"} ${remaining} para conseguir tu café gratis. ¡Te esperamos! 🎁`;
+  return `¡Hola ${c.name}! ☕\u2764\uFE0F ¡Acabás de sumar un nuevo sello a tu Café Club! Ya tenés ${c.stamps} de ${GOAL} sellos. Te falta${remaining===1?"":"n"} ${remaining} para conseguir tu café gratis. ¡Te esperamos! \u{1F381}`;
 }
 
 function buildRedeemMessage(c){
-  return `¡Hola ${c.name}! 🎁☕ ¡Tu recompensa de Café Club fue canjeada! Gracias por visitarnos y ser parte de TARJEX. ¡Te esperamos pronto! ❤️`;
+  return `¡Hola ${c.name}! \u{1F381}☕ ¡Tu recompensa de Café Club fue canjeada! Gracias por visitarnos y ser parte de TARJEX. ¡Te esperamos pronto! \u2764\uFE0F`;
 }
 
 function renderCustomer(c, notification){
