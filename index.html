@@ -4,36 +4,39 @@
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f5f7fb;font-family:Arial,sans-serif;color:#111827}.wrap{max-width:430px;margin:auto;padding:22px}.card{background:#fff;border:1px solid #e5e7eb;border-radius:24px;padding:24px;box-shadow:0 12px 35px #0001}.logo{font-size:22px;font-weight:800}.hero{text-align:center;margin:35px 0 22px}.coffee{font-size:44px}.hero h1{font-size:30px;margin:8px 0}label{font-size:14px;font-weight:600}input,button{width:100%;padding:15px;border-radius:13px;font-size:16px}input{border:1px solid #d1d5db;margin:7px 0 14px}button{border:0;background:#111827;color:white;font-weight:700}button.secondary{background:#eef2f7;color:#111827;margin-top:10px}.hidden{display:none}.muted{color:#6b7280}.stamps{display:flex;gap:8px;justify-content:center;margin:22px 0}.stamp{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#eef2f7;color:#9ca3af}.stamp.on{background:#111827;color:white}.progress{height:10px;background:#e5e7eb;border-radius:20px;overflow:hidden}.progress div{height:100%;background:#111827}.notice{margin-top:16px;padding:13px;border-radius:14px;background:#f3f4f6;font-size:14px}.error{color:#b91c1c}.footer{text-align:center;color:#9ca3af;font-size:12px;margin-top:20px}
 
-/* Interacciones y animaciones TARJEX */
-button{cursor:pointer;position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
-button:hover{transform:translateY(-2px);box-shadow:0 9px 20px #11182722}
+/* Animaciones y progreso de la tarjeta */
+button{cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
+button:hover{transform:translateY(-2px);box-shadow:0 9px 20px #11182722;filter:brightness(1.06)}
 button:active{transform:scale(.97)}
-button:focus-visible,input:focus-visible{outline:3px solid #a5b4fc;outline-offset:3px}
-input{transition:border-color .2s ease,box-shadow .2s ease}
-input:focus{border-color:#6366f1;box-shadow:0 0 0 4px #6366f11c;outline:0}
 .card{animation:cardIn .55s cubic-bezier(.2,.8,.2,1) both}
-@keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
-.stamp{transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s ease,color .3s ease}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.stamp{transition:transform .3s ease,background .3s ease}
 .stamp.on{animation:stampPop .5s cubic-bezier(.2,1.5,.5,1) both}
-@keyframes stampPop{0%{transform:scale(.45) rotate(-18deg)}70%{transform:scale(1.18) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
-.progress div{transition:width 1s cubic-bezier(.2,.8,.2,1)}
-#status{margin:18px 0 8px}
+@keyframes stampPop{0%{transform:scale(.45)}75%{transform:scale(1.16)}100%{transform:scale(1)}}
+.progress{height:12px;background:#e5e7eb;border-radius:30px;overflow:hidden;box-shadow:inset 0 1px 3px #00000012}
+.progress div{height:100%;width:0;background:linear-gradient(90deg,#f59e0b,#fbbf24,#10b981);border-radius:30px;transition:width 1s cubic-bezier(.2,.8,.2,1);position:relative}
+.progress div:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,#ffffff88 48%,transparent 72%);animation:shine 1.8s linear infinite}
+@keyframes shine{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 #reward{transition:all .3s ease}
-.reward-unlocked{position:relative;overflow:hidden;text-align:center;padding:25px 18px;background:linear-gradient(145deg,#fff7d6,#ffdf83 55%,#fff1bd);border:2px solid #eab308;border-radius:20px;box-shadow:0 12px 30px #d9770626;animation:rewardReveal .8s cubic-bezier(.2,1.2,.4,1) both}
-.reward-unlocked .reward-icon{font-size:54px;display:block;margin-bottom:8px;animation:rewardBounce 1.3s ease-in-out infinite}
-.reward-unlocked .reward-kicker{font-size:11px;letter-spacing:2px;font-weight:900;color:#92400e}
-.reward-unlocked .reward-title{font-size:25px;font-weight:900;color:#78350f;margin:7px 0}
-.reward-unlocked .reward-copy{font-size:14px;color:#854d0e;line-height:1.5}
-@keyframes rewardReveal{from{opacity:0;transform:translateY(22px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes rewardBounce{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-8px) rotate(5deg)}}
-.confetti{position:fixed;top:-14px;width:9px;height:14px;z-index:9999;pointer-events:none;animation:confettiFall var(--fall) linear forwards;transform:rotate(var(--rot))}
-@keyframes confettiFall{to{transform:translate3d(var(--drift),110vh,0) rotate(760deg);opacity:.15}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+.progress-reward{margin-top:17px;padding:18px 16px;border-radius:18px;background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #c7d2fe;text-align:center;animation:cardIn .5s ease both}
+.progress-reward .big-number{font-size:42px;line-height:1.1;font-weight:900;color:#4338ca;margin:3px 0 7px}
+.progress-reward .headline{font-size:17px;font-weight:900;color:#312e81}
+.progress-reward .support{font-size:13px;color:#555;line-height:1.45;margin-top:7px}
+.progress-reward .mini-track{display:flex;gap:6px;justify-content:center;margin:14px 0 8px}
+.progress-reward .mini-dot{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#e0e7ff;color:#6366f1;font-size:12px;font-weight:800}
+.progress-reward .mini-dot.done{background:#4f46e5;color:white;box-shadow:0 3px 8px #4f46e544}
+.progress-reward .motivation{display:inline-block;margin-top:8px;padding:7px 12px;border-radius:999px;background:#fff;color:#4338ca;font-size:12px;font-weight:800}
+.reward-unlocked{padding:24px 16px;text-align:center;border:2px solid #eab308;border-radius:20px;background:linear-gradient(145deg,#fff7d6,#ffdf83 55%,#fff1bd);box-shadow:0 12px 30px #d9770626;animation:cardIn .7s ease both}
+.reward-unlocked .reward-icon{font-size:48px;display:block}
+.reward-unlocked strong{display:block;font-size:24px;color:#78350f;margin:8px 0}
+.confetti{position:fixed;top:-15px;width:9px;height:14px;z-index:9999;pointer-events:none;animation:fall var(--duration) linear forwards}
+@keyframes fall{to{transform:translate(var(--drift),110vh) rotate(720deg);opacity:.15}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
 </style></head><body><div class="wrap"><div class="logo">TARJEX</div>
 <section id="login" class="card" style="margin-top:25px"><div class="hero"><div class="coffee">☕</div><h1>Café Club</h1><p class="muted">Acumulá consumos y conseguí recompensas.</p></div>
 <label>Nombre</label><input id="name" placeholder="Ej. Juan Pérez"><label>WhatsApp</label><input id="phone" placeholder="Ej. 3511234567" inputmode="tel"><button onclick="register()">Ver mi tarjeta</button><div id="msg" class="notice hidden"></div></section>
-<section id="loyalty" class="card hidden" style="margin-top:25px"><p class="muted">CAFÉ CLUB</p><h2 id="customerName"></h2><p class="muted">Tu tarjeta digital</p><div id="stamps" class="stamps"></div><div class="progress"><div id="bar"></div></div><p id="status" style="text-align:center;font-weight:700"></p><div id="reward" class="notice"></div><button class="secondary" onclick="logout()">Volver al inicio</button></section>
+<section id="loyalty" class="card hidden" style="margin-top:25px"><p class="muted">CAFÉ CLUB</p><h2 id="customerName"></h2><p class="muted">Tu tarjeta digital</p><div id="stamps" class="stamps"></div><div class="progress"><div id="bar"></div></div><p id="status" style="text-align:center;font-weight:700"></p><div id="reward" class="notice"></div><button class="secondary" onclick="logout()">Cambiar cliente</button></section>
 <div class="footer">Sistema de fidelización · Tarjex</div></div>
 <script>
 const API_URL="https://script.google.com/macros/s/AKfycbyWWDHC4rZtJmQr-B2On0buiHINW3z1Fp96lJfLXC11JnjdEZiPCB10LXXZ-ZDnPAju/exec",GOAL=5;
@@ -42,18 +45,13 @@ async function api(action,data={}){let r=await fetch(API_URL,{method:"POST",body
 async function register(){let n=document.getElementById("name").value.trim(),p=document.getElementById("phone").value.trim();if(!n||!p)return msg("Completá los datos.","error");msg("Cargando...");try{let r=await api("getCustomer",{name:n,phone:p});if(!r.ok)return msg(r.error,"error");localStorage.setItem("tarjex_phone",p);render(r.customer)}catch(e){msg("No se pudo conectar. Revisá la URL del Apps Script.","error")}}
 function celebrate(){
   if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  const colors=["#f59e0b","#10b981","#6366f1","#ec4899","#0ea5e9","#f97316"];
-  for(let i=0;i<85;i++){
-    const piece=document.createElement("i");
-    piece.className="confetti";
-    piece.style.left=(Math.random()*100)+"vw";
-    piece.style.background=colors[i%colors.length];
-    piece.style.setProperty("--fall",(2.3+Math.random()*2.2)+"s");
-    piece.style.setProperty("--drift",((Math.random()-.5)*260)+"px");
-    piece.style.setProperty("--rot",(Math.random()*180)+"deg");
-    piece.style.animationDelay=(Math.random()*.65)+"s";
-    piece.style.borderRadius=Math.random()>.5?"50%":"2px";
-    document.body.appendChild(piece);
+  const colors=["#f59e0b","#10b981","#6366f1","#ec4899","#0ea5e9"];
+  for(let i=0;i<75;i++){
+    const piece=document.createElement("i");piece.className="confetti";
+    piece.style.left=(Math.random()*100)+"vw";piece.style.background=colors[i%colors.length];
+    piece.style.setProperty("--duration",(2.2+Math.random()*2)+"s");
+    piece.style.setProperty("--drift",((Math.random()-.5)*240)+"px");
+    piece.style.animationDelay=(Math.random()*.5)+"s";document.body.appendChild(piece);
     piece.addEventListener("animationend",()=>piece.remove(),{once:true});
   }
 }
@@ -61,27 +59,30 @@ function render(c){
   document.getElementById("login").classList.add("hidden");
   document.getElementById("loyalty").classList.remove("hidden");
   document.getElementById("customerName").textContent=c.name;
-  const s=document.getElementById("stamps");
-  s.innerHTML="";
+  const stamps=document.getElementById("stamps");stamps.innerHTML="";
   for(let i=1;i<=GOAL;i++){
-    const d=document.createElement("div");
-    d.className="stamp "+(i<=c.stamps?"on":"");
-    d.textContent=i<=c.stamps?"☕":"○";
-    d.style.animationDelay=(i*.07)+"s";
-    s.appendChild(d);
+    const d=document.createElement("div");d.className="stamp "+(i<=c.stamps?"on":"");
+    d.textContent=i<=c.stamps?"☕":"○";d.style.animationDelay=(i*.07)+"s";stamps.appendChild(d);
   }
-  document.getElementById("bar").style.width=Math.min(c.stamps/GOAL*100,100)+"%";
-  const reward=document.getElementById("reward");
-  if(c.stamps>=GOAL){
-    document.getElementById("status").textContent="🎉 ¡Llegaste a la meta!";
+  const count=Math.min(Number(c.stamps)||0,GOAL);
+  document.getElementById("bar").style.width=(count/GOAL*100)+"%";
+  const status=document.getElementById("status"),reward=document.getElementById("reward");
+  if(count>=GOAL){
+    status.textContent="🎉 ¡Llegaste a la meta!";
     reward.className="reward-unlocked";
-    reward.innerHTML='<span class="reward-icon">🎉☕</span><div class="reward-kicker">RECOMPENSA DESBLOQUEADA</div><div class="reward-title">¡Tu café es GRATIS!</div><div class="reward-copy">Completaste los 5 sellos.<br>Mostrá esta tarjeta al personal y disfrutá tu premio.</div>';
+    reward.innerHTML='<span class="reward-icon">🎉☕</span><strong>¡Tu café es GRATIS!</strong><span>Completaste los 5 sellos. Mostrá esta tarjeta al personal y disfrutá tu premio.</span>';
     celebrate();
   }else{
-    const x=GOAL-c.stamps;
-    document.getElementById("status").textContent=c.stamps+" de "+GOAL+" consumos";
-    reward.className="notice";
-    reward.textContent="Te faltan "+x+" consumo"+(x==1?"":"s")+" para tu recompensa. ¡Ya casi!";
+    const left=GOAL-count;
+    status.textContent=count+" de "+GOAL+" consumos";
+    reward.className="progress-reward";
+    const dots=Array.from({length:GOAL},(_,i)=>'<span class="mini-dot '+(i<count?'done':'')+'">'+(i<count?'✓':(i+1))+'</span>').join('');
+    let headline,detail,motivation;
+    if(count===0){headline="¡Tu camino al café gratis empieza acá!";detail="Sumá tu primer sello y empezá a acercarte a tu recompensa.";motivation="¡Cada visita cuenta! ☕";}
+    else if(left===1){headline="¡Estás a un solo sello!";detail="Con tu próxima visita completás la tarjeta y el próximo café va por nuestra cuenta.";motivation="¡La próxima taza es GRATIS! 🎁";}
+    else if(left===2){headline="¡Ya estás muy cerca!";detail="Te faltan solo 2 sellos para disfrutar tu café gratis.";motivation="¡Seguí así, vas genial! ✨";}
+    else{headline="¡Vamos por esa recompensa!";detail="Cada café te acerca un poquito más. Ya llevás "+count+" de "+GOAL+" sellos.";motivation="Te faltan "+left+" sellos para tu premio";}
+    reward.innerHTML='<div class="big-number">'+left+'</div><div class="headline">'+headline+'</div><div class="support">'+detail+'</div><div class="mini-track">'+dots+'</div><div class="motivation">'+motivation+'</div>';
   }
 }
 function logout(){localStorage.removeItem("tarjex_phone");location.reload()}
