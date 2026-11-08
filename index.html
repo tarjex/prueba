@@ -37,12 +37,12 @@ button:active{transform:scale(.97)}
 <section id="login" class="card" style="margin-top:25px"><div class="hero"><div class="coffee">☕</div><h1>Café Club</h1><p class="muted">Acumulá consumos y conseguí recompensas.</p></div>
 <label>Nombre</label><input id="name" placeholder="Ej. Juan Pérez"><label>WhatsApp</label><input id="phone" placeholder="Ej. 3511234567" inputmode="tel"><button onclick="register()">Ver mi tarjeta</button><div id="msg" class="notice hidden"></div></section>
 <section id="loyalty" class="card hidden" style="margin-top:25px"><p class="muted">CAFÉ CLUB</p><h2 id="customerName"></h2><p class="muted">Tu tarjeta digital</p><div id="stamps" class="stamps"></div><div class="progress"><div id="bar"></div></div><p id="status" style="text-align:center;font-weight:700"></p><div id="reward" class="notice"></div><button class="secondary" onclick="logout()">Volver al inicio</button></section>
-<div class="footer">Sistema de fidelización · Prueba</div></div>
+<div class="footer">Sistema de fidelización · Tarjex</div></div>
 <script>
 const API_URL="https://script.google.com/macros/s/AKfycbyWWDHC4rZtJmQr-B2On0buiHINW3z1Fp96lJfLXC11JnjdEZiPCB10LXXZ-ZDnPAju/exec",GOAL=5;
 function msg(t,c=""){let e=document.getElementById("msg");e.className="notice "+c;e.textContent=t}
 async function api(action,data={}){let r=await fetch(API_URL,{method:"POST",body:JSON.stringify({action,...data})});return await r.json()}
-async function register(){let n=document.getElementById("name").value.trim(),p=document.getElementById("phone").value.trim();if(!n||!p)return msg("Completá los datos.","error");msg("Cargando...");try{let r=await api("getCustomer",{name:n,phone:p});if(!r.ok)return msg(r.error,"error");localStorage.setItem("tarjex_phone",p);render(r.customer)}catch(e){msg("No se pudo conectar. Revisá la URL del Apps Script.","error")}}
+async function register(){let n=document.getElementById("name").value.trim(),p=document.getElementById("phone").value.trim();if(!n||!p)return msg("Completá los datos.","error");msg("Cargando...");try{let r=await api("getCustomer",{name:n,phone:p});if(!r.ok)return msg(r.error,"error");render(r.customer)}catch(e){msg("No se pudo conectar. Revisá la URL del Apps Script.","error")}}
 function celebrate(){
   if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   const colors=["#f59e0b","#10b981","#6366f1","#ec4899","#0ea5e9"];
@@ -85,7 +85,5 @@ function render(c){
     reward.innerHTML='<div class="big-number">'+left+'</div><div class="headline">'+headline+'</div><div class="support">'+detail+'</div><div class="mini-track">'+dots+'</div><div class="motivation">'+motivation+'</div>';
   }
 }
-function logout(){localStorage.removeItem("tarjex_phone");location.reload()}
-async function restore(){let p=localStorage.getItem("tarjex_phone");if(!p||API_URL.includes("PEGÁ"))return;try{let r=await api("getCustomerByPhone",{phone:p});if(r.ok)render(r.customer)}catch(e){}}
-restore();
+function logout(){document.getElementById("loyalty").classList.add("hidden");document.getElementById("login").classList.remove("hidden");document.getElementById("name").value="";document.getElementById("phone").value="";document.getElementById("msg").className="notice hidden";}
 </script></body></html>
