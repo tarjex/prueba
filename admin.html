@@ -100,7 +100,7 @@ function buildStampMessage(c){
     return `¡Hola ${c.name}! \u2615\u{1F389} ¡Completaste tus ${GOAL} sellos de Café Club! Ya tenés tu café gratis. Mostrá tu tarjeta en el local para disfrutar tu recompensa. ¡Gracias por elegirnos! \u2764\uFE0F`;
   }
   const remaining=GOAL-c.stamps;
-  return `¡Hola ${c.name}! ☕\u2764\uFE0F ¡Acabás de sumar un nuevo sello a tu Café Club! Ya tenés ${c.stamps} de ${GOAL} sellos. Te falta${remaining===1?"":"n"} ${remaining} para conseguir tu café gratis. ¡Te esperamos! \u{1F381}`;
+  return `¡Hola ${c.name}! ☕¡Acabás de sumar un nuevo sello a tu Café Club! Ya tenés ${c.stamps} de ${GOAL} sellos. Te falta${remaining===1?"":"n"} ${remaining} para conseguir tu café gratis. ¡Te esperamos! `;
 }
 
 function buildRedeemMessage(c){
