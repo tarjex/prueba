@@ -36,8 +36,8 @@ button:active{transform:scale(.97)}
 </style></head><body><div class="wrap"><div class="logo">TARJEX</div>
 <section id="login" class="card" style="margin-top:25px"><div class="hero"><div class="coffee">☕</div><h1>Café Club</h1><p class="muted">Acumulá consumos y conseguí recompensas.</p></div>
 <label>Nombre</label><input id="name" placeholder="Ej. Juan Pérez"><label>WhatsApp</label><input id="phone" placeholder="Ej. 3511234567" inputmode="tel"><button onclick="register()">Ver mi tarjeta</button><div id="msg" class="notice hidden"></div></section>
-<section id="loyalty" class="card hidden" style="margin-top:25px"><p class="muted">CAFÉ CLUB</p><h2 id="customerName"></h2><p class="muted">Tu tarjeta digital</p><div id="stamps" class="stamps"></div><div class="progress"><div id="bar"></div></div><p id="status" style="text-align:center;font-weight:700"></p><div id="reward" class="notice"></div><button class="secondary" onclick="logout()">Cambiar cliente</button></section>
-<div class="footer">Sistema de fidelización · Tarjex</div></div>
+<section id="loyalty" class="card hidden" style="margin-top:25px"><p class="muted">CAFÉ CLUB</p><h2 id="customerName"></h2><p class="muted">Tu tarjeta digital</p><div id="stamps" class="stamps"></div><div class="progress"><div id="bar"></div></div><p id="status" style="text-align:center;font-weight:700"></p><div id="reward" class="notice"></div><button class="secondary" onclick="logout()">Volver al inicio</button></section>
+<div class="footer">Sistema de fidelización · Prueba</div></div>
 <script>
 const API_URL="https://script.google.com/macros/s/AKfycbyWWDHC4rZtJmQr-B2On0buiHINW3z1Fp96lJfLXC11JnjdEZiPCB10LXXZ-ZDnPAju/exec",GOAL=5;
 function msg(t,c=""){let e=document.getElementById("msg");e.className="notice "+c;e.textContent=t}
