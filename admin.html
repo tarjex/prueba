@@ -63,6 +63,8 @@ button:active,.wa-link:active{transform:scale(.98)}
 const API_URL="https://script.google.com/macros/s/AKfycbyWWDHC4rZtJmQr-B2On0buiHINW3z1Fp96lJfLXC11JnjdEZiPCB10LXXZ-ZDnPAju/exec";
 const GOAL=5;
 let pin="";
+// Evita que un doble clic o una respuesta lenta dispare dos operaciones iguales.
+const pendingActions = new Set();
 
 // Enter ejecuta la acción principal desde los campos del panel.
 document.addEventListener("DOMContentLoaded",()=>{
@@ -177,7 +179,29 @@ async function search(){
   }
 }
 
-async function addStamp(phone){
+function setCustomerActionsDisabled(phone, disabled){
+  document.querySelectorAll('#result button[data-action]').forEach(button=>{
+    button.disabled=disabled;
+    button.style.opacity=disabled?".6":"";
+    button.style.cursor=disabled?"wait":"pointer";
+  });
+}
+
+async function addStamp(customer){
+  const phone=customer.phone;
+  const key=`add:${phone}`;
+  if(pendingActions.has(key))return;
+
+  const confirmed=confirm(
+    `¿Confirmás agregar 1 sello a ${customer.name}?\n\n`+
+    `Actualmente tiene ${customer.stamps} de ${GOAL} sellos.\n`+
+    `Esta acción modificará su tarjeta.`
+  );
+  if(!confirmed)return;
+
+  if(pendingActions.has(key))return;
+  pendingActions.add(key);
+  setCustomerActionsDisabled(phone,true);
   try{
     const r=await api("addStamp",{phone,pin});
     if(!r.ok){alert(r.error);return;}
@@ -188,10 +212,29 @@ async function addStamp(phone){
         :"Sello agregado correctamente. Podés avisarle al cliente por WhatsApp.",
       message:buildStampMessage(c)
     });
-  }catch(e){alert("No se pudo conectar con Google Sheets.");}
+  }catch(e){
+    alert("No se pudo conectar con Google Sheets. Antes de volver a intentar, buscá nuevamente al cliente para comprobar si el sello llegó a registrarse.");
+  }finally{
+    pendingActions.delete(key);
+    setCustomerActionsDisabled(phone,false);
+  }
 }
 
-async function redeemReward(phone){
+async function redeemReward(customer){
+  const phone=customer.phone;
+  const key=`redeem:${phone}`;
+  if(pendingActions.has(key))return;
+
+  const confirmed=confirm(
+    `¿Confirmás canjear la recompensa de ${customer.name}?\n\n`+
+    `Sellos actuales: ${customer.stamps} de ${GOAL}.\n`+
+    `El canje descontará los sellos correspondientes y no se puede deshacer desde este panel.`
+  );
+  if(!confirmed)return;
+
+  if(pendingActions.has(key))return;
+  pendingActions.add(key);
+  setCustomerActionsDisabled(phone,true);
   try{
     const r=await api("redeem",{phone,pin});
     if(!r.ok){alert(r.error);return;}
@@ -199,7 +242,12 @@ async function redeemReward(phone){
       text:"Recompensa canjeada correctamente. Podés enviarle un agradecimiento por WhatsApp.",
       message:buildRedeemMessage(r.customer)
     });
-  }catch(e){alert("No se pudo conectar con Google Sheets.");}
+  }catch(e){
+    alert("No se pudo conectar con Google Sheets. Antes de volver a intentar, buscá nuevamente al cliente para comprobar si el canje llegó a registrarse.");
+  }finally{
+    pendingActions.delete(key);
+    setCustomerActionsDisabled(phone,false);
+  }
 }
 </script>
 </body>
