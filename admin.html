@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tarjex Panel</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f7;font-family:Arial,sans-serif;color:#111827}
+button:focus-visible,input:focus-visible,.wa-link:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+.wrap{max-width:600px;margin:auto;padding:24px}
+.card{background:#fff;border:1px solid #cbd5e1;border-radius:22px;padding:24px;margin-top:18px;box-shadow:0 8px 24px rgba(15,23,42,.08)}
+#result .card{border:2px solid #94a3b8;box-shadow:0 12px 28px rgba(15,23,42,.12);padding:24px}
+#result .row{align-items:center;padding:4px 0 18px;border-bottom:1px solid #e2e8f0;margin-bottom:16px}
+#result h2{font-size:25px;line-height:1.15;margin:0 0 7px;color:#0f172a;overflow-wrap:anywhere}
+#result small{display:inline-block;font-size:16px;font-weight:700;letter-spacing:.3px;color:#334155}
+#result .pill{background:#172033;color:#fff;padding:12px 16px;font-size:18px;border:2px solid #64748b;box-shadow:0 3px 9px #0f172a22}
+#result button{min-height:54px;font-size:17px;margin-top:12px;letter-spacing:.1px}
+#result button.secondary{background:#e2e8f0;color:#0f172a;border:1px solid #cbd5e1}
+#result .notice{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;font-weight:600}
+@media(max-width:480px){.wrap{padding:16px}.card,#result .card{padding:18px}#result h2{font-size:22px}#result .pill{font-size:16px;padding:10px 12px}}
+input,button,.wa-link{width:100%;padding:14px;border-radius:12px;font-size:16px}
+input{border:1px solid #d1d5db;margin:7px 0 12px}
+button{background:#111827;color:white;border:0;font-weight:700;cursor:pointer}
+.hidden{display:none}
+.notice{padding:13px;background:#f3f4f6;border-radius:12px;margin-top:12px;line-height:1.45}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pill{background:#eef2f7;padding:8px 12px;border-radius:999px;font-weight:700;white-space:nowrap}
+.secondary{background:#eef2f7;color:#111827;margin-top:10px}
+.wa-link{display:block;text-align:center;text-decoration:none;background:#16a34a;color:white;font-weight:700;margin-top:12px}
+.small{font-size:13px;color:#6b7280;line-height:1.45}
+
+button,.wa-link{cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
+button:hover,.wa-link:hover{transform:translateY(-2px);box-shadow:0 8px 18px #11182722;filter:brightness(1.04)}
+button:active,.wa-link:active{transform:scale(.98)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <b style="font-size:22px">TARJEX</b>
+  <div id="login" class="card">
+    <h1>Panel del negocio</h1>
+    <p>Ingresá el PIN del empleado.</p>
+    <input id="pin" type="password" placeholder="PIN" autocomplete="current-password">
+    <button onclick="login()">Ingresar</button>
+    <div id="msg" class="notice hidden"></div>
+  </div>
+
+  <div id="panel" class="hidden">
+    <div class="card">
+      <h2>Buscar cliente</h2>
+      <input id="phone" placeholder="WhatsApp del cliente" inputmode="tel">
+      <button onclick="search()">Buscar</button>
+      <p class="small">Después de agregar un sello o canjear una recompensa, vas a poder abrir WhatsApp con un mensaje listo para enviar.</p>
+    </div>
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+const API_URL="https://script.google.com/macros/s/AKfycbyWWDHC4rZtJmQr-B2On0buiHINW3z1Fp96lJfLXC11JnjdEZiPCB10LXXZ-ZDnPAju/exec";
+const GOAL=5;
+let pin="";
+
+// Enter ejecuta la acción principal desde los campos del panel.
+document.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("pin").addEventListener("keydown",e=>{
+    if(e.key==="Enter"){e.preventDefault();login();}
+  });
+  document.getElementById("phone").addEventListener("keydown",e=>{
+    if(e.key==="Enter"){e.preventDefault();search();}
+  });
+});
+
+async function api(action,data={}){
+  const r=await fetch(API_URL,{method:"POST",body:JSON.stringify({action,...data})});
+  return await r.json();
+}
+
+function login(){
+  pin=document.getElementById("pin").value.trim();
+  if(!pin)return showLoginMessage("Ingresá el PIN.");
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("panel").classList.remove("hidden");
+}
+
+function showLoginMessage(text){
+  const el=document.getElementById("msg");
+  el.textContent=text;
+  el.classList.remove("hidden");
+}
+
+function element(tag, text, className){
+  const el=document.createElement(tag);
+  if(text!==undefined)el.textContent=text;
+  if(className)el.className=className;
+  return el;
+}
+
+// Convierte números argentinos habituales al formato internacional de WhatsApp.
+// Si el número ya incluye 549, lo conserva.
+function whatsappNumber(raw){
+  let n=String(raw||"").replace(/\D/g,"");
+  if(n.startsWith("00"))n=n.slice(2);
+  if(n.startsWith("549"))return n;
+  if(n.startsWith("54"))return "549"+n.slice(2).replace(/^9/,"");
+  n=n.replace(/^0/,"").replace(/^15/,"");
+  return "549"+n;
+}
+
+function whatsappUrl(customer,message){
+  const number=whatsappNumber(customer.phone);
+  return "https://wa.me/"+number+"?text="+encodeURIComponent(message);
+}
+
+function buildStampMessage(c){
+  if(c.stamps>=GOAL){
+    return `¡Hola ${c.name}! ¡Completaste tus ${GOAL} sellos de Café Club! Ya tenés tu café gratis. Mostrá tu tarjeta en el local para disfrutar tu recompensa. ¡Gracias por elegirnos!  &#x1F60D`; ;
+  }
+  const remaining=GOAL-c.stamps;
+  return `¡Hola ${c.name}!  ¡Acabás de sumar un nuevo sello a tu Café Club! Ya tenés ${c.stamps} de ${GOAL} sellos. Te falta${remaining===1?"":"n"} ${remaining} para conseguir tu café gratis. ¡Te esperamos! `;
+}
+
+function buildRedeemMessage(c){
+  return `¡Hola ${c.name}!  ¡Tu recompensa de Café Club fue canjeada! Gracias por visitarnos y ser parte de TARJEX. ¡Te esperamos pronto! `;
+}
+
+function renderCustomer(c, notification){
+  const result=document.getElementById("result");
+  result.innerHTML="";
+
+  const card=element("div",undefined,"card");
+  const top=element("div",undefined,"row");
+  const info=element("div");
+  info.appendChild(element("h2",c.name));
+  info.appendChild(element("small",c.phone));
+  top.appendChild(info);
+  top.appendChild(element("span",`${c.stamps}/${GOAL} ☕`,"pill"));
+  card.appendChild(top);
+
+  if(notification){
+    card.appendChild(element("div",notification.text,"notice"));
+    const link=element("a","Abrir WhatsApp con mensaje listo","wa-link");
+    link.href=whatsappUrl(c,notification.message);
+    link.target="_blank";
+    link.rel="noopener noreferrer";
+    card.appendChild(link);
+    card.appendChild(element("p","Se abrirá WhatsApp. Revisá el destinatario y tocá Enviar; el mensaje no se envía solo.","small"));
+  }
+
+  const add=element("button","＋ Agregar sello");
+  add.type="button";
+  add.onclick=()=>addStamp(c.phone);
+  card.appendChild(add);
+
+  const redeem=element("button","Canjear recompensa","secondary");
+  redeem.type="button";
+  redeem.onclick=()=>redeemReward(c.phone);
+  card.appendChild(redeem);
+
+  result.appendChild(card);
+}
+
+async function search(){
+  const p=document.getElementById("phone").value.trim();
+  const result=document.getElementById("result");
+  result.innerHTML="";
+  if(!p)return;
+  try{
+    const r=await api("getCustomerByPhone",{phone:p});
+    if(!r.ok){result.appendChild(element("div",r.error,"card"));return;}
+    renderCustomer(r.customer);
+  }catch(e){
+    result.appendChild(element("div","No se pudo conectar. Revisá la URL de Apps Script.","card"));
+  }
+}
+
+async function addStamp(phone){
+  try{
+    const r=await api("addStamp",{phone,pin});
+    if(!r.ok){alert(r.error);return;}
+    const c=r.customer;
+    renderCustomer(c,{
+      text:c.stamps>=GOAL
+        ?"¡El cliente completó los 5 sellos! Prepará el mensaje para avisarle que tiene una recompensa."
+        :"Sello agregado correctamente. Podés avisarle al cliente por WhatsApp.",
+      message:buildStampMessage(c)
+    });
+  }catch(e){alert("No se pudo conectar con Google Sheets.");}
+}
+
+async function redeemReward(phone){
+  try{
+    const r=await api("redeem",{phone,pin});
+    if(!r.ok){alert(r.error);return;}
+    renderCustomer(r.customer,{
+      text:"Recompensa canjeada correctamente. Podés enviarle un agradecimiento por WhatsApp.",
+      message:buildRedeemMessage(r.customer)
+    });
+  }catch(e){alert("No se pudo conectar con Google Sheets.");}
+}
+</script>
+</body>
+</html>
