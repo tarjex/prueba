@@ -1,43 +1,72 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tarjex Fidelización</title>
+<title>BRUTO · Club de Café</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f5f7fb;font-family:Arial,sans-serif;color:#111827}.wrap{max-width:430px;margin:auto;padding:22px}.card{background:#fff;border:1px solid #e5e7eb;border-radius:24px;padding:24px;box-shadow:0 12px 35px #0001}.logo{font-size:22px;font-weight:800}.hero{text-align:center;margin:35px 0 22px}.coffee{font-size:44px}.hero h1{font-size:30px;margin:8px 0}label{font-size:14px;font-weight:600}input,button{width:100%;padding:15px;border-radius:13px;font-size:16px}input{border:1px solid #d1d5db;margin:7px 0 14px}button{border:0;background:#111827;color:white;font-weight:700}button.secondary{background:#eef2f7;color:#111827;margin-top:10px}.hidden{display:none}.muted{color:#6b7280}.stamps{display:flex;gap:8px;justify-content:center;margin:22px 0}.stamp{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#eef2f7;color:#9ca3af}.stamp.on{background:#111827;color:white}.progress{height:10px;background:#e5e7eb;border-radius:20px;overflow:hidden}.progress div{height:100%;background:#111827}.notice{margin-top:16px;padding:13px;border-radius:14px;background:#f3f4f6;font-size:14px}.error{color:#b91c1c}.footer{text-align:center;color:#9ca3af;font-size:12px;margin-top:20px}
 
-/* Animaciones y progreso de la tarjeta */
-button{cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
-button:hover{transform:translateY(-2px);box-shadow:0 9px 20px #11182722;filter:brightness(1.06)}
-button:active{transform:scale(.97)}
-.card{animation:cardIn .55s cubic-bezier(.2,.8,.2,1) both}
-@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.stamp{transition:transform .3s ease,background .3s ease}
-.stamp.on{animation:stampPop .5s cubic-bezier(.2,1.5,.5,1) both}
-@keyframes stampPop{0%{transform:scale(.45)}75%{transform:scale(1.16)}100%{transform:scale(1)}}
-.progress{height:12px;background:#e5e7eb;border-radius:30px;overflow:hidden;box-shadow:inset 0 1px 3px #00000012}
-.progress div{height:100%;width:0;background:linear-gradient(90deg,#f59e0b,#fbbf24,#10b981);border-radius:30px;transition:width 1s cubic-bezier(.2,.8,.2,1);position:relative}
+*{box-sizing:border-box}
+:root{--paper:#f6e8d2;--paper2:#fff5e6;--orange:#df4d0b;--orange-dark:#b93c08;--ink:#4b2415;--line:#e5a078}
+html{min-height:100%;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--orange);font-family:Arial,Helvetica,sans-serif}
+.wrap{position:relative;max-width:480px;margin:0 auto;padding:22px 20px 28px;overflow:hidden}
+.wrap:before{content:"";position:absolute;z-index:0;right:-48px;top:95px;width:150px;height:150px;border:2px solid var(--orange);border-radius:50%;opacity:.22}
+.wrap:after{content:"✦";position:absolute;z-index:0;right:25px;top:260px;font-size:38px;color:var(--orange);opacity:.75}
+.logo{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;font-size:17px;line-height:1;font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:5px 2px 17px;border-bottom:2px solid var(--orange)}
+.logo:after{content:"COFFEE CLUB";font-size:10px;letter-spacing:.16em}
+.card{position:relative;z-index:1;background:var(--paper2);border:2px solid var(--orange);border-radius:3px;padding:25px 22px;box-shadow:7px 7px 0 var(--orange);animation:cardIn .55s cubic-bezier(.2,.8,.2,1) both}
+#login{margin-top:25px!important}
+#loyalty{margin-top:25px!important}
+.hero{text-align:left;margin:4px 0 26px}
+.coffee{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border:2px solid var(--orange);border-radius:50%;font-size:28px;color:var(--orange);transform:rotate(-8deg)}
+.hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(48px,13vw,68px);line-height:.84;letter-spacing:-.065em;text-transform:uppercase;margin:15px 0 12px;color:var(--orange);font-weight:900}
+.hero p{max-width:280px;color:var(--ink);font-size:14px;line-height:1.5;font-weight:600;margin:0}
+label{display:block;font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--orange-dark);margin-top:8px}
+input,button{width:100%;padding:15px 14px;border-radius:2px;font-size:15px}
+input{border:1.5px solid var(--line);background:#fffaf2;color:var(--ink);margin:7px 0 13px;outline:none}
+input:focus{border-color:var(--orange);box-shadow:0 0 0 3px #df4d0b20}
+input::placeholder{color:#b98c73}
+button{border:2px solid var(--orange);background:var(--orange);color:#fff5e6;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+button:hover{transform:translateY(-2px);box-shadow:4px 4px 0 var(--ink);background:var(--orange-dark)}
+button:active{transform:scale(.98)}
+button.secondary{background:transparent;color:var(--orange);margin-top:16px}
+.hidden{display:none}
+.muted{color:var(--ink)}
+#loyalty>p:first-child{font-size:10px;letter-spacing:.18em;font-weight:900;color:var(--orange);margin:0 0 8px}
+#customerName{font-family:Georgia,'Times New Roman',serif;font-size:34px;line-height:1;margin:0 0 7px;text-transform:uppercase;color:var(--orange);overflow-wrap:anywhere}
+#loyalty>p:nth-of-type(2){font-size:12px;margin:0;color:var(--ink)}
+.stamps{display:flex;gap:8px;justify-content:center;margin:25px 0 20px}
+.stamp{width:48px;height:48px;flex:0 1 48px;border:1.5px solid var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--orange);font-size:20px;transition:transform .3s ease,background .3s ease}
+.stamp.on{background:var(--orange);color:var(--paper2);animation:stampPop .5s cubic-bezier(.2,1.5,.5,1) both}
+.progress{height:9px;background:#f1d1b9;border:1px solid var(--orange);border-radius:0;overflow:hidden}
+.progress div{height:100%;width:0;background:var(--orange);border-radius:0;transition:width 1s cubic-bezier(.2,.8,.2,1);position:relative}
 .progress div:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,#ffffff88 48%,transparent 72%);animation:shine 1.8s linear infinite}
-@keyframes shine{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
-#reward{transition:all .3s ease}
-.progress-reward{margin-top:17px;padding:18px 16px;border-radius:18px;background:linear-gradient(135deg,#eef2ff,#f5f3ff);border:1px solid #c7d2fe;text-align:center;animation:cardIn .5s ease both}
-.progress-reward .big-number{font-size:42px;line-height:1.1;font-weight:900;color:#4338ca;margin:3px 0 7px}
-.progress-reward .headline{font-size:17px;font-weight:900;color:#312e81}
-.progress-reward .support{font-size:13px;color:#555;line-height:1.45;margin-top:7px}
-.progress-reward .mini-track{display:flex;gap:6px;justify-content:center;margin:14px 0 8px}
-.progress-reward .mini-dot{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#e0e7ff;color:#6366f1;font-size:12px;font-weight:800}
-.progress-reward .mini-dot.done{background:#4f46e5;color:white;box-shadow:0 3px 8px #4f46e544}
-.progress-reward .motivation{display:inline-block;margin-top:8px;padding:7px 12px;border-radius:999px;background:#fff;color:#4338ca;font-size:12px;font-weight:800}
-.reward-unlocked{padding:24px 16px;text-align:center;border:2px solid #eab308;border-radius:20px;background:linear-gradient(145deg,#fff7d6,#ffdf83 55%,#fff1bd);box-shadow:0 12px 30px #d9770626;animation:cardIn .7s ease both}
+#status{text-align:center;font-weight:900;color:var(--orange-dark);font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin:13px 0}
+.notice{margin-top:16px;padding:14px;border:1.5px solid var(--line);background:#fff0dc;color:var(--ink);font-size:14px;line-height:1.5}
+.error{color:#b91c1c}
+.progress-reward{margin-top:17px;padding:18px 14px;border:1.5px solid var(--orange);background:#fff5e6;text-align:center;animation:cardIn .5s ease both}
+.progress-reward .big-number{font-family:Georgia,'Times New Roman',serif;font-size:48px;line-height:1;font-weight:900;color:var(--orange);margin:3px 0 7px}
+.progress-reward .headline{font-family:Georgia,'Times New Roman',serif;font-size:20px;font-weight:900;color:var(--orange);text-transform:uppercase;line-height:1.05}
+.progress-reward .support{font-size:13px;color:var(--ink);line-height:1.45;margin-top:8px}
+.progress-reward .mini-track{display:flex;gap:7px;justify-content:center;margin:14px 0 8px}
+.progress-reward .mini-dot{width:25px;height:25px;border:1px solid var(--orange);display:grid;place-items:center;background:transparent;color:var(--orange);font-size:12px;font-weight:800}
+.progress-reward .mini-dot.done{background:var(--orange);color:white}
+.progress-reward .motivation{display:inline-block;margin-top:8px;padding:7px 12px;background:var(--orange);color:#fff5e6;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.reward-unlocked{padding:24px 16px;text-align:center;border:2px solid var(--orange);background:#fbe0c5;box-shadow:5px 5px 0 var(--orange-dark);animation:cardIn .7s ease both}
 .reward-unlocked .reward-icon{font-size:48px;display:block}
-.reward-unlocked strong{display:block;font-size:24px;color:#78350f;margin:8px 0}
+.reward-unlocked strong{display:block;font-family:Georgia,'Times New Roman',serif;font-size:26px;line-height:1;color:var(--orange);margin:8px 0;text-transform:uppercase}
+.reward-unlocked span:last-child{font-size:13px;color:var(--ink);line-height:1.5}
 .confetti{position:fixed;top:-15px;width:9px;height:14px;z-index:9999;pointer-events:none;animation:fall var(--duration) linear forwards}
+.footer{text-align:center;color:var(--orange-dark);font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-top:30px}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes stampPop{0%{transform:scale(.45)}75%{transform:scale(1.16)}100%{transform:scale(1)}}
+@keyframes shine{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 @keyframes fall{to{transform:translate(var(--drift),110vh) rotate(720deg);opacity:.15}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
-</style></head><body><div class="wrap"><div class="logo">TARJEX</div>
-<section id="login" class="card" style="margin-top:25px"><div class="hero"><div class="coffee">☕</div><h1>Café Club</h1><p class="muted">Acumulá consumos y conseguí recompensas.</p></div>
-<label>Nombre</label><input id="name" placeholder="Ej. Juan Pérez"><label>WhatsApp</label><input id="phone" placeholder="Ej. 3511234567" inputmode="tel"><button onclick="register()">Ver mi tarjeta</button><div id="msg" class="notice hidden"></div></section>
-<section id="loyalty" class="card hidden" style="margin-top:25px"><p class="muted">CAFÉ CLUB</p><h2 id="customerName"></h2><p class="muted">Tu tarjeta digital</p><div id="stamps" class="stamps"></div><div class="progress"><div id="bar"></div></div><p id="status" style="text-align:center;font-weight:700"></p><div id="reward" class="notice"></div><button class="secondary" onclick="logout()">Volver al inicio</button></section>
-<div class="footer">Sistema de fidelización · Tarjex</div></div>
+</style></head><body><div class="wrap"><div class="logo">BRUTO</div>
+<section id="login" class="card" style="margin-top:25px"><div class="hero"><div class="coffee">☕</div><h1>BRUTO<br>CLUB</h1><p class="muted">Un café, un sello. Volvé por más y desbloqueá premios.</p></div>
+<label>Nombre</label><input id="name" placeholder="Ej. Juan Pérez"><label>WhatsApp</label><input id="phone" placeholder="Ej. 3511234567" inputmode="tel"><button onclick="register()">VER MI TARJETA</button><div id="msg" class="notice hidden"></div></section>
+<section id="loyalty" class="card hidden" style="margin-top:25px"><p class="muted">BRUTO CLUB</p><h2 id="customerName"></h2><p class="muted">TU TARJETA DIGITAL</p><div id="stamps" class="stamps"></div><div class="progress"><div id="bar"></div></div><p id="status" style="text-align:center;font-weight:700"></p><div id="reward" class="notice"></div><button class="secondary" onclick="logout()">Volver al inicio</button></section>
+<div class="footer">BRUTO COFFEE PARTY · GENERAL PAZ</div></div>
 <script>
 const API_URL="https://script.google.com/macros/s/AKfycbyWWDHC4rZtJmQr-B2On0buiHINW3z1Fp96lJfLXC11JnjdEZiPCB10LXXZ-ZDnPAju/exec",GOAL=5;
 function msg(t,c=""){let e=document.getElementById("msg");e.className="notice "+c;e.textContent=t}
@@ -45,7 +74,7 @@ async function api(action,data={}){let r=await fetch(API_URL,{method:"POST",body
 async function register(){let n=document.getElementById("name").value.trim(),p=document.getElementById("phone").value.trim();if(!n||!p)return msg("Completá los datos.","error");msg("Cargando...");try{let r=await api("getCustomer",{name:n,phone:p});if(!r.ok)return msg(r.error,"error");render(r.customer)}catch(e){msg("No se pudo conectar. Revisá la URL del Apps Script.","error")}}
 function celebrate(){
   if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  const colors=["#f59e0b","#10b981","#6366f1","#ec4899","#0ea5e9"];
+  const colors=["#df4d0b","#f3a36f","#b93c08","#f6e8d2","#7b2f10"];
   for(let i=0;i<75;i++){
     const piece=document.createElement("i");piece.className="confetti";
     piece.style.left=(Math.random()*100)+"vw";piece.style.background=colors[i%colors.length];
@@ -70,7 +99,7 @@ function render(c){
   if(count>=GOAL){
     status.textContent="🎉 ¡Llegaste a la meta!";
     reward.className="reward-unlocked";
-    reward.innerHTML='<span class="reward-icon">🎉☕</span><strong>¡Tu café es GRATIS!</strong><span>Completaste los 5 sellos. Mostrá esta tarjeta al personal y disfrutá tu premio.</span>';
+    reward.innerHTML='<span class="reward-icon">🎉☕</span><strong>¡UN CAFÉ POR LA CASA!</strong><span>Completaste los 5 sellos. Mostrá esta tarjeta en BRUTO y disfrutá tu premio.</span>';
     celebrate();
   }else{
     const left=GOAL-count;
@@ -78,8 +107,8 @@ function render(c){
     reward.className="progress-reward";
     const dots=Array.from({length:GOAL},(_,i)=>'<span class="mini-dot '+(i<count?'done':'')+'">'+(i<count?'✓':(i+1))+'</span>').join('');
     let headline,detail,motivation;
-    if(count===0){headline="¡Tu camino al café gratis empieza acá!";detail="Sumá tu primer sello y empezá a acercarte a tu recompensa.";motivation="¡Cada visita cuenta! ☕";}
-    else if(left===1){headline="¡Estás a un solo sello!";detail="Con tu próxima visita completás la tarjeta y el próximo café va por nuestra cuenta.";motivation="¡La próxima taza es GRATIS! 🎁";}
+    if(count===0){headline="¡ARRANCA TU CAMINO BRUTO!";detail="Sumá tu primer sello y empezá a acercarte a tu recompensa.";motivation="¡Cada visita cuenta! ☕";}
+    else if(left===1){headline="¡Estás a un solo sello!";detail="Con tu próxima visita completás la tarjeta y el próximo café va por nuestra cuenta.";motivation="¡EL PRÓXIMO CAFÉ VA POR BRUTO!";}
     else if(left===2){headline="¡Ya estás muy cerca!";detail="Te faltan solo 2 sellos para disfrutar tu café gratis.";motivation="¡Seguí así, vas genial! ✨";}
     else{headline="¡Vamos por esa recompensa!";detail="Cada café te acerca un poquito más. Ya llevás "+count+" de "+GOAL+" sellos.";motivation="Te faltan "+left+" sellos para tu premio";}
     reward.innerHTML='<div class="big-number">'+left+'</div><div class="headline">'+headline+'</div><div class="support">'+detail+'</div><div class="mini-track">'+dots+'</div><div class="motivation">'+motivation+'</div>';
