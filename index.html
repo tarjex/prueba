@@ -16,7 +16,8 @@ body{margin:0;background:var(--paper);color:var(--orange);font-family:Arial,Helv
 #login{margin-top:25px!important}
 #loyalty{margin-top:25px!important}
 .hero{text-align:left;margin:4px 0 26px}
-.coffee{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border:2px solid var(--orange);border-radius:50%;font-size:28px;color:var(--orange);transform:rotate(-8deg)}
+.coffee{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border:2px solid var(--orange);border-radius:50%;overflow:hidden;transform:rotate(-8deg);background:var(--paper2)}
+.coffee img{width:100%;height:100%;object-fit:contain;transform:rotate(8deg)}
 .hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(48px,13vw,68px);line-height:.84;letter-spacing:-.065em;text-transform:uppercase;margin:15px 0 12px;color:var(--orange);font-weight:900}
 .hero p{max-width:280px;color:var(--ink);font-size:14px;line-height:1.5;font-weight:600;margin:0}
 label{display:block;font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--orange-dark);margin-top:8px}
@@ -34,7 +35,9 @@ button.secondary{background:transparent;color:var(--orange);margin-top:16px}
 #customerName{font-family:Georgia,'Times New Roman',serif;font-size:34px;line-height:1;margin:0 0 7px;text-transform:uppercase;color:var(--orange);overflow-wrap:anywhere}
 #loyalty>p:nth-of-type(2){font-size:12px;margin:0;color:var(--ink)}
 .stamps{display:flex;gap:8px;justify-content:center;margin:25px 0 20px}
-.stamp{width:48px;height:48px;flex:0 1 48px;border:1.5px solid var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--orange);font-size:20px;transition:transform .3s ease,background .3s ease}
+.stamp{width:48px;height:48px;flex:0 1 48px;border:1.5px solid var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;color:var(--orange);overflow:hidden;transition:transform .3s ease,background .3s ease}
+.stamp img{width:39px;height:39px;object-fit:contain;opacity:.38;transition:opacity .25s ease,transform .25s ease}
+.stamp.on img{opacity:1;transform:scale(1.04)}
 .stamp.on{background:var(--orange);color:var(--paper2);animation:stampPop .5s cubic-bezier(.2,1.5,.5,1) both}
 .progress{height:9px;background:#f1d1b9;border:1px solid var(--orange);border-radius:0;overflow:hidden}
 .progress div{height:100%;width:0;background:var(--orange);border-radius:0;transition:width 1s cubic-bezier(.2,.8,.2,1);position:relative}
@@ -63,7 +66,7 @@ button.secondary{background:transparent;color:var(--orange);margin-top:16px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
 </style></head><body><div class="wrap"><div class="logo">BRUTO</div>
-<section id="login" class="card" style="margin-top:25px"><div class="hero"><div class="coffee"><a href="https://ugc.production.linktr.ee/1891065c-372f-4215-8f98-8ce50ae3ced7_bcaf05a8ee61355700bb94affc81a225-tplv-tiktokx-cropcenter-1080-1080.jpeg?io=true&size=avatar-v3_0"></a></div><h1>BRUTO<br>CLUB</h1><p class="muted">Un café, un sello. Volvé por más y desbloqueá premios.</p></div>
+<section id="login" class="card" style="margin-top:25px"><div class="hero"><div class="coffee"><img src="vaso-bruto.png" alt="Vaso de café BRUTO"></div><h1>BRUTO<br>CLUB</h1><p class="muted">Un café, un sello. Volvé por más y desbloqueá premios.</p></div>
 <label>Nombre</label><input id="name" placeholder="Ej. Juan Pérez"><label>WhatsApp</label><input id="phone" placeholder="Ej. 3511234567" inputmode="tel"><button onclick="register()">VER MI TARJETA</button><div id="msg" class="notice hidden"></div></section>
 <section id="loyalty" class="card hidden" style="margin-top:25px"><p class="muted">BRUTO CLUB</p><h2 id="customerName"></h2><p class="muted">TU TARJETA DIGITAL</p><div id="stamps" class="stamps"></div><div class="progress"><div id="bar"></div></div><p id="status" style="text-align:center;font-weight:700"></p><div id="reward" class="notice"></div><button class="secondary" onclick="logout()">Volver al inicio</button></section>
 <div class="footer">BRUTO COFFEE PARTY · GENERAL PAZ</div></div>
@@ -91,7 +94,7 @@ function render(c){
   const stamps=document.getElementById("stamps");stamps.innerHTML="";
   for(let i=1;i<=GOAL;i++){
     const d=document.createElement("div");d.className="stamp "+(i<=c.stamps?"on":"");
-    d.textContent=i<=c.stamps?"☕":"○";d.style.animationDelay=(i*.07)+"s";stamps.appendChild(d);
+    const cup=document.createElement("img");cup.src="vaso-bruto.png";cup.alt="Sello de café";d.appendChild(cup);d.style.animationDelay=(i*.07)+"s";stamps.appendChild(d);
   }
   const count=Math.min(Number(c.stamps)||0,GOAL);
   document.getElementById("bar").style.width=(count/GOAL*100)+"%";
