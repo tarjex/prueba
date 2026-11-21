@@ -3,55 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BRUTO · Panel de fidelización</title>
+<title>Tarjex Panel</title>
 <style>
 *{box-sizing:border-box}
 :root{--paper:#f6e8d2;--paper2:#fff5e6;--orange:#df4d0b;--orange-dark:#b93c08;--ink:#4b2415;--line:#e5a078}
 html{min-height:100%;background:var(--paper)}
 body{margin:0;background:var(--paper);color:var(--orange);font-family:Arial,Helvetica,sans-serif}
-button:focus-visible,input:focus-visible,textarea:focus-visible,.wa-link:focus-visible{outline:3px solid #b93c08;outline-offset:3px}
-.wrap{max-width:600px;margin:auto;padding:22px 20px 32px}
-.brand{display:flex;align-items:center;justify-content:space-between;font-weight:900;font-size:22px;letter-spacing:.12em;padding:5px 2px 17px;border-bottom:2px solid var(--orange)}
-.brand span:last-child{font-size:10px;letter-spacing:.16em}
-.card{background:var(--paper2);border:2px solid var(--orange);border-radius:3px;padding:23px;margin-top:19px;box-shadow:6px 6px 0 var(--orange);animation:cardIn .45s ease both}
-h1,h2{font-family:Georgia,'Times New Roman',serif;color:var(--orange);text-transform:uppercase;line-height:1;margin:0 0 12px}
-h1{font-size:clamp(32px,8vw,45px)}h2{font-size:25px}
+button:focus-visible,input:focus-visible,.wa-link:focus-visible{outline:3px solid var(--orange-dark);outline-offset:3px}
+.wrap{position:relative;max-width:600px;margin:0 auto;padding:22px 20px 32px;overflow:hidden;min-height:100vh}
+.wrap:before{content:"";position:absolute;z-index:0;right:-48px;top:95px;width:150px;height:150px;border:2px solid var(--orange);border-radius:50%;opacity:.22;pointer-events:none}
+.wrap:after{content:"✦";position:absolute;z-index:0;right:25px;top:260px;font-size:38px;color:var(--orange);opacity:.75;pointer-events:none}
+.logo{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;font-size:17px;line-height:1;font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:5px 2px 17px;border-bottom:2px solid var(--orange)}
+.logo:after{content:"COFFEE CLUB";font-size:10px;letter-spacing:.16em}
+.card{position:relative;z-index:1;background:var(--paper2);border:2px solid var(--orange);border-radius:3px;padding:24px 22px;margin-top:20px;box-shadow:7px 7px 0 var(--orange);animation:cardIn .45s ease both}
+#login{margin-top:25px}
+h1,h2{font-family:Georgia,'Times New Roman',serif;color:var(--orange);text-transform:uppercase;letter-spacing:-.035em}
+h1{font-size:clamp(34px,9vw,48px);line-height:.95;margin:0 0 12px}
+h2{font-size:25px;line-height:1.1;margin:0 0 14px}
 p{color:var(--ink);line-height:1.5}
-input,textarea,button,.wa-link{width:100%;padding:14px;border-radius:2px;font-size:15px}
-input,textarea{border:1.5px solid var(--line);background:#fffaf2;color:var(--ink);margin:7px 0 13px;font-family:Arial,sans-serif}
-textarea{min-height:95px;resize:vertical;line-height:1.45}
-input:focus,textarea:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px #df4d0b20}
-label{display:block;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-dark);margin-top:7px}
-button,.wa-link{border:2px solid var(--orange);background:var(--orange);color:#fff5e6;font-weight:900;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;text-decoration:none;text-align:center;display:block;transition:transform .2s,box-shadow .2s,filter .2s}
-button:hover,.wa-link:hover{transform:translateY(-2px);box-shadow:4px 4px 0 var(--ink);filter:brightness(1.04)}
+label{display:block;font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--orange-dark);margin-top:8px}
+input,button,.wa-link{width:100%;padding:14px;border-radius:2px;font-size:15px}
+input{border:1.5px solid var(--line);background:#fffaf2;color:var(--ink);margin:7px 0 13px;outline:none}
+input:focus{border-color:var(--orange);box-shadow:0 0 0 3px #df4d0b20}
+input::placeholder{color:#b98c73}
+button{border:2px solid var(--orange);background:var(--orange);color:#fff5e6;font-weight:900;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+button:hover,.wa-link:hover{transform:translateY(-2px);box-shadow:4px 4px 0 var(--ink);background:var(--orange-dark)}
 button:active,.wa-link:active{transform:scale(.98)}
-button:disabled{opacity:.55;cursor:wait;transform:none;box-shadow:none}
 .hidden{display:none!important}
-.notice{padding:13px;background:#fff0dc;border:1.5px solid var(--line);margin-top:12px;color:var(--ink);line-height:1.45}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.pill{background:var(--orange);color:#fff5e6;padding:9px 12px;font-weight:900;white-space:nowrap}
+.notice{padding:13px 14px;background:#fff0dc;border:1.5px solid var(--line);color:var(--ink);margin-top:12px;line-height:1.5;border-radius:0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 0 17px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.pill{background:var(--orange);color:var(--paper2);padding:10px 13px;border:1.5px solid var(--orange);font-weight:900;white-space:nowrap}
 .secondary{background:transparent;color:var(--orange);margin-top:10px}
-.wa-link{margin-top:12px;background:#2d6b43;border-color:#2d6b43}
-.small{font-size:12px;color:#77513c;line-height:1.45}
-#result .card{padding:22px}
-#result h2{font-size:25px;overflow-wrap:anywhere}
-#result .row{padding-bottom:15px;border-bottom:1px solid var(--line);margin-bottom:14px}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.actions button{margin:0}
-#result .notice{font-weight:600}
-hr{border:0;border-top:1px solid var(--line);margin:20px 0}
-.section-kicker{font-size:10px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--orange-dark);margin:0 0 8px}
-@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:480px){.wrap{padding:16px}.card{padding:18px}.actions{grid-template-columns:1fr}}
+.secondary:hover{color:var(--paper2)}
+.wa-link{display:block;text-align:center;text-decoration:none;background:var(--orange);color:var(--paper2);font-weight:900;border:2px solid var(--orange);margin-top:12px;letter-spacing:.04em}
+.small{font-size:12px;color:var(--ink);line-height:1.5}
+#result .card{border:2px solid var(--orange);box-shadow:7px 7px 0 var(--orange);padding:22px}
+#result h2{font-size:clamp(22px,6vw,30px);overflow-wrap:anywhere;margin:0 0 7px}
+#result small{display:inline-block;font-size:14px;font-weight:700;letter-spacing:.3px;color:var(--ink);overflow-wrap:anywhere}
+#result .pill{font-size:16px}
+#result button{min-height:50px;font-size:14px;margin-top:12px}
+#result button.secondary{background:transparent;color:var(--orange);border:2px solid var(--orange)}
+#result button.secondary:hover{background:var(--orange);color:var(--paper2)}
+#result .notice{background:#fff0dc;border:1.5px solid var(--line);color:var(--ink);font-weight:600}
+.footer{text-align:center;position:relative;z-index:1;color:var(--orange-dark);font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-top:30px}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.wrap{padding:20px 16px 28px}.card,#result .card{padding:20px 17px}#result .pill{font-size:14px;padding:9px 10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="brand"><span>BRUTO</span><span>PANEL DE CAFÉ CLUB</span></div>
+  <div class="logo">BRUTO</div>
   <div id="login" class="card">
-    <p class="section-kicker">BRUTO · COFFEE CLUB</p><h1>Panel del negocio</h1>
-    <p>Ingresá el PIN del equipo para gestionar sellos y recompensas.</p>
+    <h1>Panel del negocio</h1>
+    <p>Ingresá el PIN del empleado.</p>
     <input id="pin" type="password" placeholder="PIN" autocomplete="current-password">
     <button onclick="login()">Ingresar</button>
     <div id="msg" class="notice hidden"></div>
@@ -59,149 +64,158 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}
 
   <div id="panel" class="hidden">
     <div class="card">
-      <p class="section-kicker">GESTIÓN DE CLIENTES</p><h2>Buscar cliente</h2>
-      <input id="phone" placeholder="Ej. 3511234567" inputmode="tel">
+      <h2>Buscar cliente</h2>
+      <input id="phone" placeholder="WhatsApp del cliente" inputmode="tel">
       <button onclick="search()">Buscar</button>
-      <p class="small">Buscá por teléfono. Después de cada acción podés revisar y personalizar el mensaje antes de abrir WhatsApp.</p>
-      <hr>
-      <p class="section-kicker">MENSAJES PERSONALIZABLES</p>
-      <label for="stampTemplate">Mensaje al sumar un sello</label>
-      <textarea id="stampTemplate" spellcheck="true"></textarea>
-      <label for="redeemTemplate">Mensaje al canjear una recompensa</label>
-      <textarea id="redeemTemplate" spellcheck="true"></textarea>
-      <p class="small">Variables disponibles: {nombre}, {sellos}, {meta}, {faltan}, {premio}. Los cambios quedan guardados en este navegador.</p>
-      <button type="button" class="secondary" id="saveTemplates">GUARDAR MENSAJES</button>
-      <div id="templateStatus" class="small" aria-live="polite"></div>
+      <p class="small">Después de agregar un sello o canjear una recompensa, vas a poder abrir WhatsApp con un mensaje listo para enviar.</p>
     </div>
     <div id="result"></div>
   </div>
+  <div class="footer">BRUTO COFFEE PARTY · GENERAL PAZ</div>
 </div>
-
 
 <script>
 const API_URL="https://script.google.com/macros/s/AKfycbyWWDHC4rZtJmQr-B2On0buiHINW3z1Fp96lJfLXC11JnjdEZiPCB10LXXZ-ZDnPAju/exec";
 const GOAL=5;
-const DEFAULT_STAMP="¡Hola {nombre}! Gracias por venir a BRUTO. Ya sumaste un sello: tenés {sellos} de {meta}. Te faltan {faltan} para {premio}. ¡Te esperamos pronto!";
-const DEFAULT_REDEEM="¡Hola {nombre}! ¡Gracias por elegir BRUTO! Tu recompensa fue canjeada. Disfrutá {premio} y volvé cuando quieras.";
-let pin="", currentCustomer=null, busy=false;
-const $=id=>document.getElementById(id);
+let pin="";
 
+// Enter ejecuta la acción principal desde los campos del panel.
 document.addEventListener("DOMContentLoaded",()=>{
-  $("pin").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();login();}});
-  $("phone").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();search();}});
-  $("stampTemplate").value=localStorage.getItem("bruto_stamp_template")||DEFAULT_STAMP;
-  $("redeemTemplate").value=localStorage.getItem("bruto_redeem_template")||DEFAULT_REDEEM;
-  $("saveTemplates").addEventListener("click",saveTemplates);
+  document.getElementById("pin").addEventListener("keydown",e=>{
+    if(e.key==="Enter"){e.preventDefault();login();}
+  });
+  document.getElementById("phone").addEventListener("keydown",e=>{
+    if(e.key==="Enter"){e.preventDefault();search();}
+  });
 });
 
 async function api(action,data={}){
-  const controller=new AbortController();
-  const timeout=setTimeout(()=>controller.abort(),15000);
-  try{
-    const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action,...data}),signal:controller.signal});
-    if(!response.ok)throw new Error("HTTP "+response.status);
-    return await response.json();
-  }finally{clearTimeout(timeout);}
+  const r=await fetch(API_URL,{method:"POST",body:JSON.stringify({action,...data})});
+  return await r.json();
 }
-function setBusy(value){busy=value;document.querySelectorAll("button").forEach(b=>{if(!b.dataset.keepEnabled)b.disabled=value;});}
+
 function login(){
-  const entered=$("pin").value.trim();
-  if(!entered){showLoginMessage("Ingresá el PIN.");$("pin").focus();return;}
-  pin=entered;
-  $("login").classList.add("hidden");
-  $("panel").classList.remove("hidden");
-  $("phone").focus();
+  pin=document.getElementById("pin").value.trim();
+  if(!pin)return showLoginMessage("Ingresá el PIN.");
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("panel").classList.remove("hidden");
 }
-function showLoginMessage(text){const el=$("msg");el.textContent=text;el.classList.remove("hidden");}
-function element(tag,text,className){
+
+function showLoginMessage(text){
+  const el=document.getElementById("msg");
+  el.textContent=text;
+  el.classList.remove("hidden");
+}
+
+function element(tag, text, className){
   const el=document.createElement(tag);
   if(text!==undefined)el.textContent=text;
   if(className)el.className=className;
   return el;
 }
+
+// Convierte números argentinos habituales al formato internacional de WhatsApp.
+// Si el número ya incluye 549, lo conserva.
 function whatsappNumber(raw){
   let n=String(raw||"").replace(/\D/g,"");
   if(n.startsWith("00"))n=n.slice(2);
   if(n.startsWith("549"))return n;
   if(n.startsWith("54"))return "549"+n.slice(2).replace(/^9/,"");
-  n=n.replace(/^0/,"");
-  if(n.startsWith("15"))n=n.slice(2);
+  n=n.replace(/^0/,"").replace(/^15/,"");
   return "549"+n;
 }
+
 function whatsappUrl(customer,message){
   const number=whatsappNumber(customer.phone);
   return "https://wa.me/"+number+"?text="+encodeURIComponent(message);
 }
-function saveTemplates(){
-  localStorage.setItem("bruto_stamp_template",$("stampTemplate").value.trim()||DEFAULT_STAMP);
-  localStorage.setItem("bruto_redeem_template",$("redeemTemplate").value.trim()||DEFAULT_REDEEM);
-  $("templateStatus").textContent="Mensajes guardados en este navegador.";
+
+function buildStampMessage(c){
+  if(c.stamps>=GOAL){
+    return `¡Hola ${c.name}! ¡Completaste tus ${GOAL} sellos de Café Club! Ya tenés tu café gratis. Mostrá tu tarjeta en el local para disfrutar tu recompensa. ¡Gracias por elegirnos!  &#x1F60D`; ;
+  }
+  const remaining=GOAL-c.stamps;
+  return `¡Hola ${c.name}!  ¡Acabás de sumar un nuevo sello a tu Café Club! Ya tenés ${c.stamps} de ${GOAL} sellos. Te falta${remaining===1?"":"n"} ${remaining} para conseguir tu café gratis. ¡Te esperamos! `;
 }
-function fillTemplate(template,c){
-  const count=Math.max(0,Number(c.stamps)||0), remaining=Math.max(0,GOAL-count);
-  const values={nombre:c.name||"cliente",sellos:count,meta:GOAL,faltan:remaining,premio:"tu recompensa de BRUTO"};
-  return template.replace(/\{(nombre|sellos|meta|faltan|premio)\}/g,(_,key)=>String(values[key]));
+
+function buildRedeemMessage(c){
+  return `¡Hola ${c.name}!  ¡Tu recompensa de Café Club fue canjeada! Gracias por visitarnos y ser parte de TARJEX. ¡Te esperamos pronto! `;
 }
-function buildStampMessage(c){return fillTemplate($("stampTemplate").value||DEFAULT_STAMP,c);}
-function buildRedeemMessage(c){return fillTemplate($("redeemTemplate").value||DEFAULT_REDEEM,c);}
-function renderCustomer(c,notification){
-  currentCustomer=c;
-  const result=$("result");result.innerHTML="";
+
+function renderCustomer(c, notification){
+  const result=document.getElementById("result");
+  result.innerHTML="";
+
   const card=element("div",undefined,"card");
-  const top=element("div",undefined,"row"),info=element("div");
-  info.appendChild(element("h2",c.name||"Cliente"));
-  info.appendChild(element("small",c.phone||""));
-  top.appendChild(info);top.appendChild(element("span",`${Number(c.stamps)||0}/${GOAL} SELLOS`,"pill"));
+  const top=element("div",undefined,"row");
+  const info=element("div");
+  info.appendChild(element("h2",c.name));
+  info.appendChild(element("small",c.phone));
+  top.appendChild(info);
+  top.appendChild(element("span",`${c.stamps}/${GOAL} ☕`,"pill"));
   card.appendChild(top);
+
   if(notification){
     card.appendChild(element("div",notification.text,"notice"));
-    const preview=element("div",notification.message,"notice");preview.style.whiteSpace="pre-wrap";preview.setAttribute("aria-label","Vista previa del mensaje");
-    card.appendChild(element("p","VISTA PREVIA DE WHATSAPP","section-kicker"));
-    card.appendChild(preview);
-    const link=element("a","ABRIR WHATSAPP CON MENSAJE","wa-link");
-    link.href=whatsappUrl(c,notification.message);link.target="_blank";link.rel="noopener noreferrer";
+    const link=element("a","Abrir WhatsApp con mensaje listo","wa-link");
+    link.href=whatsappUrl(c,notification.message);
+    link.target="_blank";
+    link.rel="noopener noreferrer";
     card.appendChild(link);
-    card.appendChild(element("p","WhatsApp se abre con el texto listo. Revisá el mensaje y tocá Enviar; no se envía automáticamente.","small"));
+    card.appendChild(element("p","Se abrirá WhatsApp. Revisá el destinatario y tocá Enviar; el mensaje no se envía solo.","small"));
   }
-  const actions=element("div",undefined,"actions");
-  const add=element("button","＋ AGREGAR SELLO");add.type="button";add.onclick=()=>addStamp(c.phone);
-  const redeem=element("button","CANJEAR PREMIO","secondary");redeem.type="button";redeem.onclick=()=>redeemReward(c.phone);
-  actions.append(add,redeem);card.appendChild(actions);result.appendChild(card);
+
+  const add=element("button","＋ Agregar sello");
+  add.type="button";
+  add.onclick=()=>addStamp(c.phone);
+  card.appendChild(add);
+
+  const redeem=element("button","Canjear recompensa","secondary");
+  redeem.type="button";
+  redeem.onclick=()=>redeemReward(c.phone);
+  card.appendChild(redeem);
+
+  result.appendChild(card);
 }
+
 async function search(){
-  const p=$("phone").value.trim(),result=$("result");result.innerHTML="";
-  if(!p){result.appendChild(element("div","Ingresá el WhatsApp del cliente.","card"));$("phone").focus();return;}
-  if(busy)return;setBusy(true);
+  const p=document.getElementById("phone").value.trim();
+  const result=document.getElementById("result");
+  result.innerHTML="";
+  if(!p)return;
   try{
     const r=await api("getCustomerByPhone",{phone:p});
-    if(!r.ok){result.appendChild(element("div",r.error||"No se encontró el cliente.","card"));return;}
+    if(!r.ok){result.appendChild(element("div",r.error,"card"));return;}
     renderCustomer(r.customer);
-  }catch(e){result.appendChild(element("div",e.name==="AbortError"?"La consulta tardó demasiado. Intentá nuevamente.":"No se pudo conectar con Google Sheets. Revisá tu conexión.","card"));}
-  finally{setBusy(false);}
+  }catch(e){
+    result.appendChild(element("div","No se pudo conectar. Revisá la URL de Apps Script.","card"));
+  }
 }
+
 async function addStamp(phone){
-  if(busy)return;setBusy(true);
   try{
     const r=await api("addStamp",{phone,pin});
-    if(!r.ok){alert(r.error||"No se pudo agregar el sello.");return;}
+    if(!r.ok){alert(r.error);return;}
     const c=r.customer;
-    renderCustomer(c,{text:(Number(c.stamps)>=GOAL?"El cliente completó la tarjeta. Ya podés avisarle su recompensa.":"Sello agregado correctamente. Revisá el mensaje antes de enviarlo."),message:buildStampMessage(c)});
-  }catch(e){alert(e.name==="AbortError"?"La operación tardó demasiado. Volvé a intentar.":"No se pudo conectar con Google Sheets.");}
-  finally{setBusy(false);}
+    renderCustomer(c,{
+      text:c.stamps>=GOAL
+        ?"¡El cliente completó los 5 sellos! Prepará el mensaje para avisarle que tiene una recompensa."
+        :"Sello agregado correctamente. Podés avisarle al cliente por WhatsApp.",
+      message:buildStampMessage(c)
+    });
+  }catch(e){alert("No se pudo conectar con Google Sheets.");}
 }
+
 async function redeemReward(phone){
-  if(busy)return;
-  if(!confirm("¿Confirmás el canje de la recompensa? Esta acción modificará los sellos del cliente."))return;
-  setBusy(true);
   try{
     const r=await api("redeem",{phone,pin});
-    if(!r.ok){alert(r.error||"No se pudo canjear la recompensa.");return;}
-    renderCustomer(r.customer,{text:"Recompensa canjeada correctamente. Revisá el agradecimiento antes de enviarlo.",message:buildRedeemMessage(r.customer)});
-  }catch(e){alert(e.name==="AbortError"?"La operación tardó demasiado. Volvé a intentar.":"No se pudo conectar con Google Sheets.");}
-  finally{setBusy(false);}
+    if(!r.ok){alert(r.error);return;}
+    renderCustomer(r.customer,{
+      text:"Recompensa canjeada correctamente. Podés enviarle un agradecimiento por WhatsApp.",
+      message:buildRedeemMessage(r.customer)
+    });
+  }catch(e){alert("No se pudo conectar con Google Sheets.");}
 }
 </script>
-
 </body>
 </html>
-
