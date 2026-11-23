@@ -65,11 +65,11 @@ button.secondary{background:transparent;color:var(--orange);margin-top:16px}
 @keyframes fall{to{transform:translate(var(--drift),110vh) rotate(720deg);opacity:.15}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
-</style></head><body><div class="wrap"><div class="logo">BRUTO</div>
-<section id="login" class="card" style="margin-top:25px"><div class="hero"><div class="coffee"><img src="vaso-bruto.png" alt="Vaso de café BRUTO"></div><h1>BRUTO<br>CLUB</h1><p class="muted">Un café, un sello. Volvé por más y desbloqueá premios.</p></div>
+</style></head><body><div class="wrap"><div class="logo">BRUTO CONCEPT</div>
+<section id="login" class="card" style="margin-top:25px"><div class="hero"><div class="coffee"><img src="logo.jpg" alt="logo BRUTO"></div><h1>BRUTO<br>CLUB</h1><p class="muted">Un compra, un sello. Volvé por más y desbloqueá premios.</p></div>
 <label>Nombre</label><input id="name" placeholder="Ej. Juan Pérez"><label>WhatsApp</label><input id="phone" placeholder="Ej. 3511234567" inputmode="tel"><button onclick="register()">VER MI TARJETA</button><div id="msg" class="notice hidden"></div></section>
 <section id="loyalty" class="card hidden" style="margin-top:25px"><p class="muted">BRUTO CLUB</p><h2 id="customerName"></h2><p class="muted">TU TARJETA DIGITAL</p><div id="stamps" class="stamps"></div><div class="progress"><div id="bar"></div></div><p id="status" style="text-align:center;font-weight:700"></p><div id="reward" class="notice"></div><button class="secondary" onclick="logout()">Volver al inicio</button></section>
-<div class="footer">BRUTO COFFEE PARTY · GENERAL PAZ</div></div>
+<div class="footer">| Vermut | Birra | comida brutal· 📍25 de Mayo 876 Café de especialidad</div></div>
 <script>
 const API_URL="https://script.google.com/macros/s/AKfycbyWWDHC4rZtJmQr-B2On0buiHINW3z1Fp96lJfLXC11JnjdEZiPCB10LXXZ-ZDnPAju/exec",GOAL=5;
 function msg(t,c=""){let e=document.getElementById("msg");e.className="notice "+c;e.textContent=t}
