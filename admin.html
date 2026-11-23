@@ -44,6 +44,8 @@ button:active,.wa-link:active{transform:scale(.98)}
 #result button{min-height:50px;font-size:14px;margin-top:12px}
 #result button.secondary{background:transparent;color:var(--orange);border:2px solid var(--orange)}
 #result button.secondary:hover{background:var(--orange);color:var(--paper2)}
+#result button.danger{border-color:#9f2d18;color:#9f2d18}
+#result button.danger:hover{background:#9f2d18;color:#fff5e6}
 #result .notice{background:#fff0dc;border:1.5px solid var(--line);color:var(--ink);font-weight:600}
 .footer{text-align:center;position:relative;z-index:1;color:var(--orange-dark);font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-top:30px}
 @keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -175,6 +177,13 @@ function renderCustomer(c, notification){
   redeem.onclick=()=>redeemReward(c.phone);
   card.appendChild(redeem);
 
+  const remove=element("button","− Eliminar sello duplicado","secondary danger");
+  remove.type="button";
+  remove.disabled=Number(c.stamps)<=0;
+  if(remove.disabled){remove.title="Este cliente no tiene sellos para eliminar";remove.style.opacity=".45";remove.style.cursor="not-allowed";}
+  remove.onclick=()=>removeStamp(c.phone);
+  card.appendChild(remove);
+
   result.appendChild(card);
 }
 
@@ -213,6 +222,18 @@ async function redeemReward(phone){
     renderCustomer(r.customer,{
       text:"Recompensa canjeada correctamente. Podés enviarle un agradecimiento por WhatsApp.",
       message:buildRedeemMessage(r.customer)
+    });
+  }catch(e){alert("No se pudo conectar con Google Sheets.");}
+}
+
+async function removeStamp(phone){
+  const confirmed=confirm("¿Estás seguro de que querés eliminar UN sello de este cliente?\n\nEsta acción no se puede deshacer.");
+  if(!confirmed)return;
+  try{
+    const r=await api("removeStamp",{phone,pin});
+    if(!r.ok){alert(r.error);return;}
+    renderCustomer(r.customer,{
+      text:"Se eliminó 1 sello correctamente. La cantidad del cliente ya está actualizada."
     });
   }catch(e){alert("No se pudo conectar con Google Sheets.");}
 }
