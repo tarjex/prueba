@@ -94,7 +94,7 @@ function render(c){
   const stamps=document.getElementById("stamps");stamps.innerHTML="";
   for(let i=1;i<=GOAL;i++){
     const d=document.createElement("div");d.className="stamp "+(i<=c.stamps?"on":"");
-    const cup=document.createElement("img");cup.src="vaso-bruto.png";cup.alt="Sello de café";d.appendChild(cup);d.style.animationDelay=(i*.07)+"s";stamps.appendChild(d);
+    const cup=document.createElement("img");cup.src="logob.jpeg";cup.alt="Sello de café";d.appendChild(cup);d.style.animationDelay=(i*.07)+"s";stamps.appendChild(d);
   }
   const count=Math.min(Number(c.stamps)||0,GOAL);
   document.getElementById("bar").style.width=(count/GOAL*100)+"%";
