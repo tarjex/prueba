@@ -6,50 +6,48 @@
 <title>Tarjex Panel</title>
 <style>
 *{box-sizing:border-box}
-:root{--paper:#f6e8d2;--paper2:#fff5e6;--orange:#df4d0b;--orange-dark:#b93c08;--ink:#4b2415;--line:#e5a078}
-html{min-height:100%;background:var(--paper)}
-body{margin:0;background:var(--paper);color:var(--orange);font-family:Arial,Helvetica,sans-serif}
-button:focus-visible,input:focus-visible,.wa-link:focus-visible{outline:3px solid var(--orange-dark);outline-offset:3px}
-.wrap{position:relative;max-width:600px;margin:0 auto;padding:22px 20px 32px;overflow:hidden;min-height:100vh}
-.wrap:before{content:"";position:absolute;z-index:0;right:-48px;top:95px;width:150px;height:150px;border:2px solid var(--orange);border-radius:50%;opacity:.22;pointer-events:none}
-.wrap:after{content:"✦";position:absolute;z-index:0;right:25px;top:260px;font-size:38px;color:var(--orange);opacity:.75;pointer-events:none}
-.logo{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;font-size:17px;line-height:1;font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:5px 2px 17px;border-bottom:2px solid var(--orange)}
-.logo:after{content:"COFFEE CLUB";font-size:10px;letter-spacing:.16em}
-.card{position:relative;z-index:1;background:var(--paper2);border:2px solid var(--orange);border-radius:3px;padding:24px 22px;margin-top:20px;box-shadow:7px 7px 0 var(--orange);animation:cardIn .45s ease both}
-#login{margin-top:25px}
-h1,h2{font-family:Georgia,'Times New Roman',serif;color:var(--orange);text-transform:uppercase;letter-spacing:-.035em}
-h1{font-size:clamp(34px,9vw,48px);line-height:.95;margin:0 0 12px}
-h2{font-size:25px;line-height:1.1;margin:0 0 14px}
-p{color:var(--ink);line-height:1.5}
-label{display:block;font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--orange-dark);margin-top:8px}
-input,button,.wa-link{width:100%;padding:14px;border-radius:2px;font-size:15px}
-input{border:1.5px solid var(--line);background:#fffaf2;color:var(--ink);margin:7px 0 13px;outline:none}
-input:focus{border-color:var(--orange);box-shadow:0 0 0 3px #df4d0b20}
-input::placeholder{color:#b98c73}
-button{border:2px solid var(--orange);background:var(--orange);color:#fff5e6;font-weight:900;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
-button:hover,.wa-link:hover{transform:translateY(-2px);box-shadow:4px 4px 0 var(--ink);background:var(--orange-dark)}
-button:active,.wa-link:active{transform:scale(.98)}
+:root{--bg:#f4f5f7;--card:#ffffff;--blue:#315efb;--blue-dark:#2347d4;--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--danger:#d93025}
+html{min-height:100%;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",Inter,"Segoe UI",system-ui,-apple-system,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button:focus-visible,input:focus-visible,.wa-link:focus-visible{outline:3px solid #315efb55;outline-offset:2px}
+.wrap{max-width:460px;margin:0 auto;padding:28px 18px 32px;min-height:100vh}
+.logo{display:flex;align-items:center;justify-content:space-between;font-size:13px;line-height:1;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);padding:4px 4px 6px}
+.logo:after{content:"COFFEE CLUB";font-size:10px;letter-spacing:.14em;color:var(--muted);font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 22px;margin-top:18px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.04);animation:cardIn .4s ease both}
+#login{margin-top:36px}
+h1,h2{color:var(--ink);letter-spacing:-.03em;font-weight:800}
+h1{font-size:clamp(28px,8vw,34px);line-height:1.05;margin:0 0 10px}
+h2{font-size:22px;line-height:1.15;margin:0 0 14px}
+p{color:var(--muted);line-height:1.55;font-size:14.5px;margin:0 0 16px}
+label{display:block;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-top:8px}
+input,button,.wa-link{width:100%;padding:14px 16px;border-radius:12px;font-size:15px;font-family:inherit}
+input{border:1px solid var(--line);background:#fff;color:var(--ink);margin:4px 0 12px;outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 4px #315efb1f}
+input::placeholder{color:#9ca3af}
+button{border:1px solid var(--blue);background:var(--blue);color:#fff;font-weight:700;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s}
+button:hover,.wa-link:hover{background:var(--blue-dark);box-shadow:0 6px 16px #315efb33}
+button:active,.wa-link:active{transform:scale(.985)}
 .hidden{display:none!important}
-.notice{padding:13px 14px;background:#fff0dc;border:1.5px solid var(--line);color:var(--ink);margin-top:12px;line-height:1.5;border-radius:0}
-.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 0 17px;border-bottom:1px solid var(--line);margin-bottom:16px}
-.pill{background:var(--orange);color:var(--paper2);padding:10px 13px;border:1.5px solid var(--orange);font-weight:900;white-space:nowrap}
-.secondary{background:transparent;color:var(--orange);margin-top:10px}
-.secondary:hover{color:var(--paper2)}
-.wa-link{display:block;text-align:center;text-decoration:none;background:var(--orange);color:var(--paper2);font-weight:900;border:2px solid var(--orange);margin-top:12px;letter-spacing:.04em}
-.small{font-size:12px;color:var(--ink);line-height:1.5}
-#result .card{border:2px solid var(--orange);box-shadow:7px 7px 0 var(--orange);padding:22px}
-#result h2{font-size:clamp(22px,6vw,30px);overflow-wrap:anywhere;margin:0 0 7px}
-#result small{display:inline-block;font-size:14px;font-weight:700;letter-spacing:.3px;color:var(--ink);overflow-wrap:anywhere}
-#result .pill{font-size:16px}
+.notice{padding:13px 14px;background:#f3f6ff;border:1px solid #dbe4ff;color:var(--ink);margin-top:12px;line-height:1.5;border-radius:12px;font-size:14px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:2px 0 16px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.pill{background:#eef2ff;color:var(--blue);padding:9px 13px;border-radius:999px;font-weight:800;white-space:nowrap}
+.secondary{background:#fff;color:var(--blue);border:1px solid var(--line);margin-top:10px}
+.secondary:hover{background:#f3f6ff;color:var(--blue-dark);box-shadow:none}
+.wa-link{display:block;text-align:center;text-decoration:none;background:var(--blue);color:#fff;font-weight:700;border:1px solid var(--blue);margin-top:12px}
+.small{font-size:12px;color:var(--muted);line-height:1.5}
+#result .card{padding:22px}
+#result h2{font-size:clamp(20px,6vw,26px);overflow-wrap:anywhere;margin:0 0 4px}
+#result small{display:inline-block;font-size:14px;font-weight:600;color:var(--muted);overflow-wrap:anywhere}
+#result .pill{font-size:15px}
 #result button{min-height:50px;font-size:14px;margin-top:12px}
-#result button.secondary{background:transparent;color:var(--orange);border:2px solid var(--orange)}
-#result button.secondary:hover{background:var(--orange);color:var(--paper2)}
-#result button.danger{border-color:#9f2d18;color:#9f2d18}
-#result button.danger:hover{background:#9f2d18;color:#fff5e6}
-#result .notice{background:#fff0dc;border:1.5px solid var(--line);color:var(--ink);font-weight:600}
-.footer{text-align:center;position:relative;z-index:1;color:var(--orange-dark);font-size:9px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-top:30px}
-@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:480px){.wrap{padding:20px 16px 28px}.card,#result .card{padding:20px 17px}#result .pill{font-size:14px;padding:9px 10px}}
+#result button.secondary{background:#fff;color:var(--blue);border:1px solid var(--line)}
+#result button.secondary:hover{background:#f3f6ff}
+#result button.danger{color:var(--danger);border-color:#f3d4d1}
+#result button.danger:hover{background:#fdf1f0;color:var(--danger)}
+#result .notice{background:#f3f6ff;border:1px solid #dbe4ff;color:var(--ink);font-weight:500}
+.footer{text-align:center;color:#9ca3af;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-top:28px}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.wrap{padding:22px 14px 28px}.card,#result .card{padding:20px 17px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
 </head>
@@ -69,7 +67,7 @@ button:active,.wa-link:active{transform:scale(.98)}
       <h2>Buscar cliente</h2>
       <input id="phone" placeholder="WhatsApp del cliente" inputmode="tel">
       <button onclick="search()">Buscar</button>
-      <p class="small">Después de agregar un sello o canjear una recompensa, vas a poder abrir WhatsApp con un mensaje listo para enviar.</p>
+      <p class="small" style="margin-top:14px">Después de agregar un sello o canjear una recompensa, vas a poder abrir WhatsApp con un mensaje listo para enviar.</p>
     </div>
     <div id="result"></div>
   </div>
